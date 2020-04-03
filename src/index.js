@@ -1,3 +1,5 @@
+'use strict'
+
 const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
@@ -38,7 +40,21 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    expr = expr.split(/(\d{10})/g)
+               .join(' ')           
+               .replace(/10/g, '.') 
+               .replace(/11/g, '-') 
+               .replace(/00/g, '')  
+               .replace(/\*{10}/g, '_')
+               .split(' ')         
+               .map(element => {
+                   if (element == '_') return ' ';
+                   for (let key in MORSE_TABLE) {
+                       if (key == element) return MORSE_TABLE[key];
+                   };
+               })
+               .join('')
+    return expr;
 }
 
 module.exports = {
